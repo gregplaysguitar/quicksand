@@ -22,7 +22,8 @@ Github site: http://github.com/razorjack/quicksand
 			duration: 750,
 			easing: 'swing',
 			attribute: 'data-id', // attribute to recognize same items within source and dest
-			adjustHeight: true // put false if you don't want the plugin to adjust height of container to fit all the items
+			adjustHeight: true, // put false if you don't want the plugin to adjust height of container to fit all the items
+		    preCallback: null
 		};
 		$.extend(options, customOptions);
 		options.selector = null;
@@ -160,6 +161,9 @@ Github site: http://github.com/razorjack/quicksand
 			if (options.adjustHeight) {
 				$sourceParent.animate({height: $dest.height()}, options.duration, options.easing);
 			}
+			
+			
+			
 				
 			// Now it's time to do shuffling animation
 			// First of all, we need to identify same elements within source and destination collections	
@@ -185,6 +189,7 @@ Github site: http://github.com/razorjack/quicksand
 					}
 				}
 			});
+			
 			
 			$collection.each(function (i) {
 				// Grab all items from target collection not present in visible source collection
@@ -217,6 +222,14 @@ Github site: http://github.com/razorjack/quicksand
 						.animate(animationOptions, options.duration, options.easing, postCallback);
 				}
 			});
+			
+			
+			// perform the pre-callback
+			if (typeof options.preCallback == 'function') {
+			    options.preCallback();
+			}
+			
+			
 		});
 	};
 })(jQuery);
